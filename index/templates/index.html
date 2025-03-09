@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+    Create a new menu
+{% endblock %}
+
+{% block style %}{% endblock %}
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Create Your Menu</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Food Items Selection -->
+        <div class="form-group">
+            <label for="food_items">Select Food Items:</label>
+            <select name="food_items" id="food_items" multiple class="form-control">
+                {% for category, food_items in form.food_items.field.choices %}
+                    <optgroup label="{{ category }}">
+                        {% for food_id, food_name in food_items %}
+                            <option value="{{ food_id }}">{{ food_name }}</option>
+                        {% endfor %}
+                    </optgroup>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}{% endblock %}
