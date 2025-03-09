@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+    Create a new menu
+{% endblock %}
+
+{% block style %}{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <h2>Create Your Menu</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Food Items Selection -->
+        <div class="form-group">
+            <label>Select Food Items:</label>
+            <div class="food-items-container">
+                {% for category, food_items in form.food_items.field.choices %}
+                    <fieldset class="category-group">
+                        <legend>{{ category }}</legend>  <!-- 分类名称 -->
+                        {% for food_id, food_name in food_items %}
+                            <div class="form-check">
+                                <input type="checkbox" name="food_items" value="{{ food_id }}" id="food_{{ food_id }}" class="form-check-input">
+                                <label for="food_{{ food_id }}" class="form-check-label">{{ food_name }}</label>
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+
+<style>
+    .food-items-container {
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 5px;
+        max-width: 600px;
+        background: #f9f9f9;
+    }
+
+    .category-group {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .category-group:last-child {
+        border-bottom: none;
+    }
+
+    legend {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .form-check {
+        margin-left: 10px;
+    }
+</style>
+
+{% endblock %}
+
+{% block scripts %}{% endblock %}

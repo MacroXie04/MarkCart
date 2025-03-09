@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+    To-Do List App
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="todo-app">
+        <!-- List of To-Do Tasks Here -->
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary" style="width: 100%; display: block; text-align: center;">login</button>
+        </form>
+        <p></p>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

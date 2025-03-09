@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    {% block style %}{% endblock %}
+
+
+</head>
+<body>
+<div class="todo_container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

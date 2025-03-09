@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+    To-Do List App
+{% endblock %}
+
+{% block style %}{% endblock %}
+
+{% block content %}
+    <div class="todo-app">
+        <!-- List of To-Do Tasks Here -->
+        <h2>Register</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group" style="margin-top: 10px; margin-bottom: 10px">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.username.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group" style="margin-top: 10px; margin-bottom: 10px">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+                {% if form.password1.help_text %}
+                    <small class="form-text text-muted">{{ form.password1.help_text }}</small>
+                {% endif %}
+                {% if form.password1.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.password1.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group" style="margin-top: 10px; margin-bottom: 10px">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.password2.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; display: block; text-align: center;">Register</button>
+        </form>
+        
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

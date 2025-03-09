@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ menu.user.username }}'s Menu</h2>
+    <p><strong>Created At:</strong> {{ menu.created_at }}</p>
+
+    <h3>Selected Food Items:</h3>
+    <ul>
+        {% for food_item in menu.food_items.all %}
+            <li>{{ food_item.name }}</li>
+        {% empty %}
+            <li>No food items selected.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Generated Recipe:</h3>
+    <p>{{ menu.chatgpt_menu|linebreaks }}</p>  <!-- Preserves line breaks -->
+
+    <h3>Buy Ingredients Online:</h3>
+    <ul>
+        {% for food_item in menu.food_items.all %}
+            <li>
+                <strong>{{ food_item.name }}</strong> -
+                <a href="https://www.target.com/s?searchTerm={{ food_item.name|urlencode }}" target="_blank">Buy on Target</a> |
+                <a href="https://www.costco.com/s?keyword={{ food_item.name|urlencode }}" target="_blank">Buy on Costco</a>
+            </li>
+        {% empty %}
+            <li>No food items available for purchase.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'index' %}" class="btn btn-primary mt-3">Create Another Menu</a>
+</div>
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2, h3 {
+        color: #333;
+    }
+    ul {
+        padding-left: 20px;
+    }
+</style>
+{% endblock %}
