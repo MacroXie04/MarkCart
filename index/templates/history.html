@@ -2,14 +2,106 @@
 {% load static %}
 
 {% block title %}
-    Create a new menu
+    Menu History
 {% endblock %}
 
-{% block style %}{% endblock %}
-
+{% block style %}
+<style>
+    .menu-history-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+    }
+    .menu-card {
+        background: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 15px;
+        transition: transform 0.2s;
+    }
+    .menu-card:hover {
+        transform: translateY(-5px);
+    }
+    .menu-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .food-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+    .food-item {
+        background: #e9ecef;
+        padding: 3px 8px;
+        border-radius: 15px;
+        font-size: 0.9em;
+    }
+    .menu-preview {
+        max-height: 100px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 10px;
+    }
+    .menu-preview::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: linear-gradient(transparent, #f9f9f9);
+    }
+    .no-menus {
+        text-align: center;
+        padding: 50px;
+        background: #f9f9f9;
+        border-radius: 10px;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div>history</div>
+<div class="menu-history-container">
+    <h2 class="mb-4">Your Menu History</h2>
+
+    {% if menus %}
+        <div class="menu-list">
+            {% for menu in menus %}
+                <div class="menu-card">
+                    <div class="menu-title">
+                        <h4>Menu #{{ menu.id }}</h4>
+                        <small>Created: {{ menu.created_at|date:"F j, Y, g:i a" }}</small>
+                    </div>
+
+                    <div class="food-items">
+                        {% for food_item in menu.food_items.all %}
+                            <span class="food-item">{{ food_item.name }}</span>
+                        {% endfor %}
+                    </div>
+
+                    {% if menu.chatgpt_menu %}
+                        <div class="menu-preview">
+                            {{ menu.chatgpt_menu|linebreaks|truncatechars:200 }}
+                        </div>
+                    {% endif %}
+
+                    <a href="{% url 'view_menu' menu_id=menu.id %}" class="btn btn-primary btn-sm">View Full Menu</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-menus">
+            <h4>You haven't created any menus yet</h4>
+            <p>Go to the home page to create your first menu!</p>
+            <a href="{% url 'index' %}" class="btn btn-primary mt-3">Create Menu</a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block scripts %}{% endblock %}

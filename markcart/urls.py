@@ -31,6 +31,6 @@ urlpatterns = [
     # user menu
     path('', views.index, name='index'),
     path('menu/<int:menu_id>/', views.view_menu, name='view_menu'),
-    # path('history/', views.history, name='history'),
+    path('history/', views.history, name='history'),
 
 ]
